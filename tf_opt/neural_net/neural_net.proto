@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package tf_opt.proto;
+
+message ParameterValue {
+  string name = 1;
+  Dimension dimension = 2;
+  // TODO: rename to values
+  repeated double value = 3 [packed = true];
+}
+
+enum OpType {
+  reserved 18;  // Deleted values.
+  INPUT = 0;
+  RELU = 1;
+  CLIPPED_RELU = 2;
+  EMBEDDING_LOOKUP = 3;
+  CONCAT = 4;
+  RESHAPE = 5;
+  CONV2D = 6;
+  CONV1D = 7;
+  ADD = 8;
+  SUBTRACT = 9;
+  MULTIPLY = 10;
+  DIVIDE = 11;
+  MAT_MUL = 12;
+  REDUCE_MAX = 13;
+  MAX_POOL = 14;
+  SLICE = 15;
+  SQUEEZE = 16;
+  EXPAND_DIMS = 17;
+  REDUCE_SUM = 19;
+  REDUCE_MEAN = 20;
+  REDUCE_MIN = 21;
+}
+
+message Dimension {
+  repeated int64 dim_sizes = 1 [packed = true];
+}
+
+message Options {
+  message DoubleOption {
+    string name = 1;
+    double value = 2;
+  }
+
+  message IntegerOption {
+    string name = 1;
+    int64 value = 2;
+  }
+
+  message StringOption {
+    string name = 1;
+    string value = 2;
+  }
+
+  message IntegerListOption {
+    string name = 1;
+    repeated int64 value = 2;
+  }
+
+  repeated DoubleOption double_options = 1;
+  repeated IntegerOption integer_options = 2;
+  repeated StringOption string_options = 3;
+  repeated IntegerListOption integer_list_options = 4;
+}
+
+message TensorNode {
+  enum TensorType {
+    FLOAT32 = 0;
+    // deleted STRING = 1;
+    INT32 = 2;
+  }
+  string name = 1;
+  OpType op_type = 2;
+  Dimension out_dimension = 3;
+  repeated string input_names = 4;
+  Options options = 6;
+  TensorType output_type = 7;
+}
+
+// For a NeuralNet to be well formed:
+//   1. tensor_nodes must be in a topological order.
+//   2. All node and parameter names must be unique (including between lists).
+//   3. All the names referenced in tensor_nodes[i].input_names must be present
+//      in either params or tensor_nodes.
+//   4. The individual nodes and parameters must be internally well formed.
+message NeuralNet {
+  repeated ParameterValue params = 1;
+  repeated TensorNode tensor_nodes = 2;
+}

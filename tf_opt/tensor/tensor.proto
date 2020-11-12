@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package tf_opt;
+
+message ShapeProto {
+  repeated int64 dimensions = 1;
+}
+
+message DoubleTensorProto {
+  ShapeProto shape = 1;
+  repeated double values = 2;
+}
