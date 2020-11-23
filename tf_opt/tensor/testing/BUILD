@@ -12,6 +12,6 @@ cc_library(
     deps = [
         "//tf_opt/tensor",
         "//tf_opt/tensor:reduce",
-        "@com_github_google_glog//:glog",
+        "@com_github_glog_glog//:glog",
     ],
 )
