@@ -57,7 +57,7 @@ http_archive(
 )
 
 http_archive(
-    name = "com_github_google_glog",
+    name = "com_github_glog_glog",
     sha256 = "62efeb57ff70db9ea2129a16d0f908941e355d09d6d83c9f7b18557c0a7ab59e",
     strip_prefix = "glog-d516278b1cd33cd148e8989aec488b6049a4ca0b",
     urls = ["https://github.com/google/glog/archive/d516278b1cd33cd148e8989aec488b6049a4ca0b.zip"],
@@ -71,4 +71,34 @@ http_archive(
     sha256 = "0915741f524ad87debb9eb0429fe6016772a1569e21dc6d492039562308fcb0f",
     strip_prefix = "re2-2020-10-01",
     urls = ["https://github.com/google/re2/archive/2020-10-01.tar.gz"],
+)
+
+
+# ============== or-tools ==============
+
+# October 2020
+http_archive(
+    name = "com_google_ortools",  # Apache 2.0
+    sha256 = "ac01d7ebde157daaeb0e21ce54923a48e4f1d21faebd0b08a54979f150f909ee",
+    strip_prefix = "or-tools-8.0",
+    urls = [
+        "https://mirror.bazel.build/github.com/google/or-tools/archive/v8.0.tar.gz",
+        "https://github.com/google/or-tools/archive/v8.0.tar.gz",
+    ],
+)
+
+http_archive(
+    name = "bliss",
+    build_file = "@com_google_ortools//bazel:bliss.BUILD",
+    patches = ["@com_google_ortools//bazel:bliss-0.73.patch"],
+    sha256 = "f57bf32804140cad58b1240b804e0dbd68f7e6bf67eba8e0c0fa3a62fd7f0f84",
+    url = "http://www.tcs.hut.fi/Software/bliss/bliss-0.73.zip",
+)
+
+http_archive(
+    name = "scip",
+    build_file = "@com_google_ortools//bazel:scip.BUILD",
+    patches = ["@com_google_ortools//bazel:scip.patch"],
+    sha256 = "033bf240298d3a1c92e8ddb7b452190e0af15df2dad7d24d0572f10ae8eec5aa",
+    url = "https://github.com/google/or-tools/releases/download/v7.7/scip-7.0.1.tgz",
 )
