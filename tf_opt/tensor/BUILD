@@ -15,8 +15,8 @@ cc_library(
     deps = [
         ":shape",
         ":tensor",
+        "//base",
         "//tf_opt/open_source:status_macros",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
     ],
 )
@@ -55,8 +55,8 @@ cc_library(
     hdrs = ["shape.h"],
     deps = [
         ":tensor_cc_proto",
+        "//base",
         "//tf_opt/neural_net:neural_net_cc_proto",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/types:span",
     ],
@@ -68,9 +68,9 @@ cc_test(
     deps = [
         ":shape",
         ":tensor_cc_proto",
+        "//base",
         "//tf_opt/neural_net:neural_net_cc_proto",
         "//tf_opt/open_source:protocol_buffer_matchers",
-        "@com_github_glog_glog//:glog",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
@@ -83,9 +83,9 @@ cc_library(
     deps = [
         ":shape",
         ":tensor_cc_proto",
+        "//base",
         "//tf_opt/neural_net:neural_net_cc_proto",
         "//tf_opt/open_source:status_macros",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
@@ -136,8 +136,8 @@ cc_library(
     hdrs = ["batch_iterator.h"],
     deps = [
         ":tensor",
+        "//base",
         "//tf_opt/open_source:status_macros",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/container:flat_hash_map",
         "@com_google_absl//absl/status:statusor",
     ],
@@ -188,8 +188,8 @@ cc_library(
         ":shape",
         ":tensor",
         ":window",
+        "//base",
         "//tf_opt/open_source:status_macros",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
@@ -216,8 +216,8 @@ cc_library(
     srcs = ["window.cc"],
     hdrs = ["window.h"],
     deps = [
+        "//base",
         "//tf_opt/open_source:status_macros",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/base:core_headers",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",
@@ -239,7 +239,7 @@ cc_library(
     name = "element_operations",
     hdrs = ["element_operations.h"],
     deps = [
-        "@com_github_glog_glog//:glog",
+        "//base",
         "@com_google_absl//absl/types:span",
     ],
 )
@@ -249,7 +249,7 @@ cc_test(
     srcs = ["element_operations_test.cc"],
     deps = [
         ":element_operations",
-        "@com_github_glog_glog//:glog",
+        "//base",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",
     ],
@@ -263,8 +263,8 @@ cc_library(
         ":element_operations",
         ":shape",
         ":tensor",
+        "//base",
         "//tf_opt/open_source:status_macros",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
     ],
 )
@@ -278,7 +278,7 @@ cc_library(
         ":math_impl",
         ":shape",
         ":tensor",
-        "@com_github_glog_glog//:glog",
+        "//base",
         "@com_google_absl//absl/status:statusor",
     ],
 )
