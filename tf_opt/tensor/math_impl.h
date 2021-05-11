@@ -22,7 +22,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/status/statusor.h"
 #include "tf_opt/tensor/element_operations.h"
 #include "tf_opt/tensor/shape.h"

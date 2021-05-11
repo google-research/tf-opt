@@ -14,7 +14,7 @@
 
 #include "tf_opt/bounds/bounds_testing.h"
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "gtest/gtest.h"
 #include "absl/strings/str_cat.h"
 #include "tf_opt/bounds/bounds.h"

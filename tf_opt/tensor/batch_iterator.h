@@ -18,7 +18,7 @@
 #include <cstdint>
 #include <string>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/container/flat_hash_map.h"
 #include "absl/status/statusor.h"
 #include "tf_opt/tensor/tensor.h"

@@ -12,11 +12,11 @@ cc_library(
     srcs = ["protocol_buffer_matchers.cc"],
     hdrs = ["protocol_buffer_matchers.h"],
     deps = [
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/strings:cord",
         "@com_google_googletest//:gtest",
+        "@com_google_ortools//ortools/base",
         "@com_google_protobuf//:protobuf",
         "@com_googlesource_code_re2//:re2",
     ],
@@ -70,9 +70,9 @@ cc_library(
     hdrs = ["status_macros.h"],
     deps = [
         ":status_builder",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 

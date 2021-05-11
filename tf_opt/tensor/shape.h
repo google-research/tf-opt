@@ -19,7 +19,7 @@
 #include <iostream>
 #include <vector>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/types/span.h"
 #include "tf_opt/neural_net/neural_net.pb.h"
 #include "tf_opt/tensor/tensor.pb.h"

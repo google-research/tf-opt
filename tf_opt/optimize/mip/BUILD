@@ -9,7 +9,7 @@ cc_library(
     srcs = ["inequality_checker.cc"],
     hdrs = ["inequality_checker.h"],
     deps = [
-        "@com_github_glog_glog//:glog",
+        "@com_google_ortools//ortools/base",
         "@com_google_ortools//ortools/linear_solver",
         "@com_google_ortools//ortools/linear_solver:linear_solver_cc_proto",
     ],

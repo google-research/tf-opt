@@ -16,7 +16,7 @@
 
 #include <utility>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/memory/memory.h"
 #include "absl/status/statusor.h"
 #include "tf_opt/neural_net/ops/all_operations.h"

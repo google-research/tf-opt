@@ -19,7 +19,7 @@
 #include <utility>
 #include <vector>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/status/statusor.h"
 #include "tf_opt/neural_net/operation.h"
 #include "tf_opt/neural_net/operation_validator.h"

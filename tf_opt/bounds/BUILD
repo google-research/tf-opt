@@ -31,9 +31,9 @@ cc_library(
     hdrs = ["bounds_testing.h"],
     deps = [
         ":bounds",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest",
+        "@com_google_ortools//ortools/base",
     ],
 )
 

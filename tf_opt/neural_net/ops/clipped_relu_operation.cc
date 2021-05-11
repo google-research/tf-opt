@@ -16,7 +16,7 @@
 
 #include <utility>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/status/statusor.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"

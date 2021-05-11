@@ -16,7 +16,7 @@
 
 #include <iostream>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/base/attributes.h"
 #include "absl/strings/string_view.h"
 

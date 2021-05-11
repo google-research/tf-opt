@@ -14,7 +14,7 @@
 
 #include "tf_opt/tensor/math.h"
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/status/statusor.h"
 
 namespace tf_opt {

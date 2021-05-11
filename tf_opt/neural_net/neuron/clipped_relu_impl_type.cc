@@ -14,7 +14,7 @@
 
 #include "tf_opt/neural_net/neuron/clipped_relu_impl_type.h"
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 
 namespace tf_opt {
 

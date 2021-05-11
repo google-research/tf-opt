@@ -19,7 +19,7 @@
 #include <numeric>
 #include <vector>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "tf_opt/tensor/reduce.h"
 #include "tf_opt/tensor/tensor.h"
 

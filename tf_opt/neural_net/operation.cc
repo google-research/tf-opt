@@ -16,7 +16,7 @@
 
 #include <cstdint>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "ortools/base/map_util.h"
 
 namespace tf_opt {

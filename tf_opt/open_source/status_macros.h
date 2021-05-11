@@ -17,7 +17,7 @@
 
 #include <sstream>
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
 #include "tf_opt/open_source/status_builder.h"

@@ -15,8 +15,8 @@ cc_library(
     deps = [
         ":shape",
         ":tensor",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -55,9 +55,9 @@ cc_library(
     deps = [
         ":tensor_cc_proto",
         "//tf_opt/neural_net:neural_net_cc_proto",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/types:span",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -80,10 +80,10 @@ cc_library(
     deps = [
         ":shape",
         "//tf_opt/neural_net:neural_net_cc_proto",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/types:span",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -129,9 +129,9 @@ cc_library(
     hdrs = ["batch_iterator.h"],
     deps = [
         ":tensor",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/container:flat_hash_map",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -181,10 +181,10 @@ cc_library(
         ":tensor",
         ":window",
         "//tf_opt/open_source:status_macros",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -209,10 +209,10 @@ cc_library(
     hdrs = ["window.h"],
     deps = [
         "//tf_opt/open_source:status_macros",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/base:core_headers",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/strings",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -253,8 +253,8 @@ cc_library(
         ":element_operations",
         ":shape",
         ":tensor",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -267,8 +267,8 @@ cc_library(
         ":math_impl",
         ":shape",
         ":tensor",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 

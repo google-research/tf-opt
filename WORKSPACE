@@ -47,22 +47,6 @@ http_archive(
     ],
 )
 
-# ========== glog =========
-
-http_archive(
-    name = "com_github_gflags_gflags",
-    sha256 = "34af2f15cf7367513b352bdcd2493ab14ce43692d2dcd9dfc499492966c64dcf",
-    strip_prefix = "gflags-2.2.2",
-    urls = ["https://github.com/gflags/gflags/archive/v2.2.2.tar.gz"],
-)
-
-http_archive(
-    name = "com_github_glog_glog",
-    sha256 = "62efeb57ff70db9ea2129a16d0f908941e355d09d6d83c9f7b18557c0a7ab59e",
-    strip_prefix = "glog-d516278b1cd33cd148e8989aec488b6049a4ca0b",
-    urls = ["https://github.com/google/glog/archive/d516278b1cd33cd148e8989aec488b6049a4ca0b.zip"],
-)
-
 # ========== re2 =======================
 # This is a dependency of open_source/protocol_buffer_matchers.cc
 
@@ -76,14 +60,14 @@ http_archive(
 
 # ============== or-tools ==============
 
-# October 2020
+# April 2021
 http_archive(
     name = "com_google_ortools",  # Apache 2.0
-    sha256 = "ac01d7ebde157daaeb0e21ce54923a48e4f1d21faebd0b08a54979f150f909ee",
-    strip_prefix = "or-tools-8.0",
+    sha256 = "fa7700b614ea2a5b2b6e37b76874bd2c3f04a80f03cbbf7871a2d2d5cd3a6091",
+    strip_prefix = "or-tools-9.0",
     urls = [
-        "https://mirror.bazel.build/github.com/google/or-tools/archive/v8.0.tar.gz",
-        "https://github.com/google/or-tools/archive/v8.0.tar.gz",
+        "https://mirror.bazel.build/github.com/google/or-tools/archive/v9.0.tar.gz",
+        "https://github.com/google/or-tools/archive/v9.0.tar.gz",
     ],
 )
 

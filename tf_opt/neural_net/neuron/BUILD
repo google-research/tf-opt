@@ -11,9 +11,9 @@ cc_library(
     srcs = ["relu_impl_type.cc"],
     hdrs = ["relu_impl_type.h"],
     deps = [
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/base:core_headers",
         "@com_google_absl//absl/strings",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -32,8 +32,8 @@ cc_library(
     srcs = ["clipped_relu_impl_type.cc"],
     hdrs = ["clipped_relu_impl_type.h"],
     deps = [
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/strings",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -52,9 +52,9 @@ cc_library(
     srcs = ["maximum_impl_type.cc"],
     hdrs = ["maximum_impl_type.h"],
     deps = [
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/base:core_headers",
         "@com_google_absl//absl/strings",
+        "@com_google_ortools//ortools/base",
     ],
 )
 

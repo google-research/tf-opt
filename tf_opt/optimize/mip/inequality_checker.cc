@@ -14,7 +14,7 @@
 
 #include "tf_opt/optimize/mip/inequality_checker.h"
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "ortools/linear_solver/linear_expr.h"
 #include "ortools/linear_solver/linear_solver.h"
 #include "ortools/linear_solver/linear_solver.pb.h"

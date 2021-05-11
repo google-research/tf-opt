@@ -33,11 +33,11 @@ cc_library(
     deps = [
         "//tf_opt/neural_net:neural_net_cc_proto",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/container:flat_hash_map",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/types:span",
+        "@com_google_ortools//ortools/base",
         "@com_google_ortools//ortools/base:map_util",
     ],
 )
@@ -124,9 +124,9 @@ cc_library(
         "//tf_opt/neural_net/ops:all_operations",
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 

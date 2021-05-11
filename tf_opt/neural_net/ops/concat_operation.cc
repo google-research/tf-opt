@@ -14,7 +14,7 @@
 
 #include "tf_opt/neural_net/ops/concat_operation.h"
 
-#include "glog/logging.h"
+#include "ortools/base/logging.h"
 #include "absl/status/statusor.h"
 #include "tf_opt/neural_net/operation_validator.h"
 #include "tf_opt/open_source/status_macros.h"

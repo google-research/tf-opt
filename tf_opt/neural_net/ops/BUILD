@@ -46,8 +46,8 @@ cc_library(
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor:math",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -78,9 +78,9 @@ cc_library(
         "//tf_opt/neural_net/neuron:clipped_relu_impl_type",
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
+        "@com_google_ortools//ortools/base",
         "@com_google_ortools//ortools/base:map_util",
     ],
 )
@@ -113,9 +113,9 @@ cc_library(
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor:concat",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -146,9 +146,9 @@ cc_library(
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -179,8 +179,8 @@ cc_library(
         "//tf_opt/tensor:convolve",
         "//tf_opt/tensor:shape",
         "//tf_opt/tensor:window",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -213,8 +213,8 @@ cc_library(
         "//tf_opt/tensor:convolve",
         "//tf_opt/tensor:shape",
         "//tf_opt/tensor:window",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -246,8 +246,8 @@ cc_library(
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor:embedding_lookup",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -277,8 +277,8 @@ cc_library(
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -310,8 +310,8 @@ cc_library(
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor:math",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -344,8 +344,8 @@ cc_library(
         "//tf_opt/tensor:pooling",
         "//tf_opt/tensor:shape",
         "//tf_opt/tensor:window",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
         "@com_google_ortools//ortools/base:map_util",
     ],
 )
@@ -381,10 +381,10 @@ cc_library(
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor:reduce",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/base:core_headers",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
@@ -416,8 +416,8 @@ cc_library(
         "//tf_opt/neural_net/neuron:relu_impl_type",
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
         "@com_google_ortools//ortools/base:map_util",
     ],
 )
@@ -512,8 +512,8 @@ cc_library(
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
+        "@com_google_ortools//ortools/base",
         "@com_google_ortools//ortools/base:map_util",
     ],
 )
@@ -545,9 +545,9 @@ cc_library(
         "//tf_opt/neural_net:operation_visitor",
         "//tf_opt/open_source:status_macros",
         "//tf_opt/tensor:shape",
-        "@com_github_glog_glog//:glog",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
+        "@com_google_ortools//ortools/base",
     ],
 )
 
