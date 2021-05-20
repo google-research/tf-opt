@@ -27,6 +27,7 @@
 #include "gmock/gmock.h"
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
+#include "tf_opt/bounds/bounds_testing.h"
 #include "tf_opt/tensor/tensor.h"
 
 namespace tf_opt {
@@ -86,6 +87,16 @@ inline ::testing::Matcher<DoubleTensor> DoubleTensorNear(
 inline ::testing::Matcher<DoubleTensor> DoubleTensorEquals(
     const DoubleTensor& rhs) {
   return TensorNear(rhs, 0.0);
+}
+
+inline ::testing::Matcher<BoundsTensor> BoundsTensorNear(
+    const BoundsTensor& rhs, double tolerance = 1e-5) {
+  return MakeMatcher(new TensorMatcher<Bounds>(rhs, BoundsAreNear, tolerance));
+}
+
+inline ::testing::Matcher<BoundsTensor> BoundsTensorEquals(
+    const BoundsTensor& rhs) {
+  return BoundsTensorNear(rhs, 0);
 }
 
 template <typename T>

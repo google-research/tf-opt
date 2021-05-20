@@ -19,6 +19,7 @@
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "tf_opt/bounds/bounds.h"
 #include "tf_opt/open_source/status_matchers.h"
 #include "tf_opt/tensor/shape.h"
 #include "tf_opt/tensor/tensor.h"
@@ -140,6 +141,16 @@ TEST(ReduceMaxTest, ReduceMaxAxisMulti3D) {
   const DoubleTensor expected({15.0, 16.0});
   const std::vector<int64_t> axes = {1, 2};
   EXPECT_THAT(ReduceMax(input, axes), DoubleTensorNear(expected));
+}
+
+TEST(ReduceMaxTest, ReduceMaxAxisBounds) {
+  const BoundsTensor input(
+      {{Bounds(10.0, 15.0), Bounds(14.0, 15.0), Bounds(12.0, 13.0)},
+       {Bounds(13.0, 14.0), Bounds(11.0, 12.0), Bounds(10.0, 16.0)}});
+  const BoundsTensor expected(
+      {Bounds(13.0, 15.0), Bounds(14.0, 15.0), Bounds(12.0, 16.0)});
+  const std::vector<int64_t> axes = {0};
+  EXPECT_THAT(ReduceMax(input, axes), BoundsTensorNear(expected, 1e-5));
 }
 
 TEST(ReduceMaxDeathTest, ReduceMaxBadAxis) {

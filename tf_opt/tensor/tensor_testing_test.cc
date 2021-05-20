@@ -38,6 +38,21 @@ TEST(DoubleTensorEqual, Scalars) {
   EXPECT_THAT(t1, Not(DoubleTensorEquals(t3)));
 }
 
+TEST(BoundsTensorNear, Bounds) {
+  const BoundsTensor t1(Bounds(3.5, 4.0));
+  const BoundsTensor t2(Bounds(3.52, 3.95));
+  EXPECT_THAT(t1, BoundsTensorNear(t2, 0.1));
+  EXPECT_THAT(t1, Not(BoundsTensorNear(t2, 0.01)));
+}
+
+TEST(BoundsTensorEqual, Bounds) {
+  const BoundsTensor t1(Bounds(3.5, 4.0));
+  const BoundsTensor t2(Bounds(3.5, 4.0));
+  const BoundsTensor t3(Bounds(3.52, 4.0));
+  EXPECT_THAT(t1, BoundsTensorEquals(t2));
+  EXPECT_THAT(t1, Not(BoundsTensorEquals(t3)));
+}
+
 TEST(IsIIDRandomNormal, Scalars) {
   EXPECT_THAT(DoubleTensor(5.1), IsIIDRandomNormal(Shape(), 5.0, 2.0));
   EXPECT_THAT(DoubleTensor(50.0), Not(IsIIDRandomNormal(Shape(), 5.0, 2.0)));

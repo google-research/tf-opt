@@ -154,8 +154,6 @@ TEST(DoubleTensorDeathTest, FromFlatDataBadShape) {
                "");
 }
 
-
-
 TEST(DoubleTensorTest, ReshapeInPlace) {
   DoubleTensor tensor({{2.0, 3.0}, {4.0, 5.0}});
   tensor.ReshapeInPlace(Shape({4}));
@@ -523,7 +521,13 @@ TEST(TensorTest, TensorReshapeInPlace) {
   EXPECT_THAT(t, DoubleTensorEquals(expected));
 }
 
-
+TEST(BoundsTensorTest, TensorToString) {
+  Tensor<Bounds> tensor = Tensor<Bounds>::FromFlatData(
+      Shape({2, 2}),
+      {Bounds(-1, 1), Bounds(-2, 2), Bounds(-3, 3), Bounds(-4, 4)});
+  EXPECT_EQ(tensor.ToString(),
+            "shape: 2,2, values: [[-1,1], [-2,2], [-3,3], [-4,4]]");
+}
 
 }  // namespace
 }  // namespace tf_opt

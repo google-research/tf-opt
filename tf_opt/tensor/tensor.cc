@@ -61,6 +61,14 @@ DoubleTensorProto DoubleTensorToProto(const DoubleTensor& double_tensor) {
   return result;
 }
 
+BoundsTensor DoubleTensorToBoundsTensor(const DoubleTensor& double_tensor) {
+  BoundsTensor result(double_tensor.dimension());
+  for (int i = 0; i < double_tensor.size(); i++) {
+    (*result.mutable_flat_values())[i] = Bounds(double_tensor.flat_values()[i]);
+  }
+  return result;
+}
+
 namespace internal {
 
 Shape SqueezeShape(const Shape& input_shape) {

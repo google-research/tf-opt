@@ -79,6 +79,7 @@ cc_library(
     hdrs = ["tensor.h"],
     deps = [
         ":shape",
+        "//tf_opt/bounds",
         "//tf_opt/neural_net:neural_net_cc_proto",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
@@ -94,6 +95,7 @@ cc_library(
     hdrs = ["tensor_testing.h"],
     deps = [
         ":tensor",
+        "//tf_opt/bounds:bounds_testing",
         "@com_google_absl//absl/strings",
         "@com_google_googletest//:gtest",
     ],
@@ -167,6 +169,7 @@ cc_test(
         ":embedding_lookup",
         ":shape",
         ":tensor_testing",
+        "//tf_opt/bounds",
         "//tf_opt/open_source:status_matchers",
         "@com_google_googletest//:gtest_main",
     ],
@@ -306,6 +309,7 @@ cc_test(
         ":shape",
         ":tensor",
         ":tensor_testing",
+        "//tf_opt/bounds",
         "//tf_opt/open_source:status_matchers",
         "@com_google_googletest//:gtest",
         "@com_google_googletest//:gtest_main",

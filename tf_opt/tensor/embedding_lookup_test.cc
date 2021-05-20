@@ -16,6 +16,7 @@
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "tf_opt/bounds/bounds.h"
 #include "tf_opt/open_source/status_matchers.h"
 #include "tf_opt/tensor/shape.h"
 #include "tf_opt/tensor/tensor_testing.h"
@@ -103,6 +104,17 @@ TEST(EmbeddingLookupTest, SimpleEmbedding1Lookup) {
   const auto expected_output = DoubleTensor::CreateMatrix({{-0.2, -0.1}});
   EXPECT_THAT(EmbeddingLookup<double>(weights, ids),
               DoubleTensorNear(expected_output));
+}
+
+TEST(EmbeddingLookupTest, SimpleEmbedding1Lookup_BoundsTensor) {
+  const auto ids =
+      BoundsTensor::CreateMatrix({{Bounds(1.0), Bounds(0.0), Bounds(0.0)}});
+  const DoubleTensor weights({{-0.2, -0.1}, {-0.3, 0.6}, {-1.0, 0.0}});
+  const auto expected_output =
+      BoundsTensor::CreateMatrix({{Bounds(-0.2), Bounds(-0.1)}});
+
+  EXPECT_THAT(EmbeddingLookup<Bounds>(weights, ids),
+              BoundsTensorNear(expected_output));
 }
 
 TEST(EmbeddingLookupTest, SimpleEmbedding2Lookups) {

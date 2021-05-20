@@ -28,6 +28,7 @@
 #include "absl/strings/str_cat.h"
 #include "absl/strings/str_join.h"
 #include "absl/types/span.h"
+#include "tf_opt/bounds/bounds.h"
 #include "tf_opt/neural_net/neural_net.pb.h"
 #include "tf_opt/tensor/shape.h"
 
@@ -327,6 +328,7 @@ std::ostream& operator<<(std::ostream& stream, const Tensor<T>& tensor) {
 }
 
 using DoubleTensor = Tensor<double>;
+using BoundsTensor = Tensor<Bounds>;
 
 // Deprecated, prefer DoubleTensorProto version below.
 DoubleTensor ProtoToDoubleTensor(
@@ -341,7 +343,21 @@ void DoubleTensorToProto(const DoubleTensor& double_tensor,
 
 DoubleTensorProto DoubleTensorToProto(const DoubleTensor& double_tensor);
 
+BoundsTensor DoubleTensorToBoundsTensor(const DoubleTensor& double_tensor);
+
 bool HasInfiniteOrNan(const DoubleTensor& tensor);
+
+// Returns a string representing a tensor of Bounds. Calls ToString on each
+// bound before joining them.
+template <>
+inline std::string Tensor<Bounds>::ToString() const {
+  return absl::StrCat("shape: ", shape_.ToString(), ", values: [",
+                      absl::StrJoin(values_, ", ",
+                                    [](std::string* out, const Bounds& bounds) {
+                                      absl::StrAppend(out, bounds.ToString());
+                                    }),
+                      "]");
+}
 
 // Methods that can be applied to any Tensor type as free functions.
 
