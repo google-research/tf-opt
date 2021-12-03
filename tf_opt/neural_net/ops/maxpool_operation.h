@@ -80,12 +80,7 @@ class MaxpoolOperation : public Operation {
   static absl::StatusOr<MaxpoolOperation> Create(
       std::string op_name, Shape input_shape, Position2D ksize,
       Position2D strides, PaddingType padding,
-      MaximumImplementationType formulation = MaximumImplementationType::kBigM);
-
-  static MaybeForGraph<MaxpoolOperation> CreateForGraph(
-      std::string op_name, const Operation* input, Position2D ksize,
-      Position2D strides, PaddingType padding,
-      MaximumImplementationType formulation = MaximumImplementationType::kBigM);
+      MaximumImplementationType formulation = kDefaultMaximum);
 
   // Expected input format:
   //   input_shapes: The dimensions of a single tensor of shape [batch, rows,
@@ -110,6 +105,9 @@ class MaxpoolOperation : public Operation {
   void Accept(OperationVisitor* visitor) const override {
     visitor->Visit(*this);
   }
+
+  proto::TensorNode ToProto(
+      const std::vector<std::string>& inputs) const override;
 
  private:
   MaxpoolOperation(std::string op_name, Shape input_shape, Shape output_shape,

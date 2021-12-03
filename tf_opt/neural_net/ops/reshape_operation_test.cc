@@ -47,19 +47,6 @@ TEST(ReshapeOperationTest, SimpleCreateInvalidOutputShape) {
               StatusIs(kInvalidArgument));
 }
 
-TEST(ReshapeOperationTest, CreateForGraph) {
-  const Shape input_shape({3, 3});
-  const Shape output_shape({1, 9, 1});
-  const ConstantOperation constant_op("const1", DoubleTensor(input_shape));
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      ReshapeOperation::CreateForGraph("r1", &constant_op, output_shape));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&constant_op));
-  const ReshapeOperation& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("r1", {input_shape}, output_shape));
-  EXPECT_EQ(op.input(), input_shape);
-}
-
 TEST(ReshapeOperationTest, GenericCreate) {
   const Shape input_shape({3, 3});
   const Shape output_shape({1, 9, 1});

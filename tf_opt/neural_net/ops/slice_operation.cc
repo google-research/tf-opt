@@ -37,14 +37,6 @@ absl::StatusOr<SliceOperation> SliceOperation::Create(
                         std::move(sizes));
 }
 
-MaybeForGraph<SliceOperation> SliceOperation::CreateForGraph(
-    std::string op_name, const Operation* input, std::vector<int64_t> begin,
-    std::vector<int64_t> sizes) {
-  return FromMaybeCreated(Create(std::move(op_name), input->output_shape(),
-                                 std::move(begin), std::move(sizes)),
-                          {input});
-}
-
 absl::StatusOr<SliceOperation> SliceOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {
@@ -63,6 +55,33 @@ absl::StatusOr<SliceOperation> SliceOperation::GenericCreate(
   TFOPT_RETURN_IF_ERROR(
       validator.ExpectOutputShapeEquals(op.output_shape(), output_shape));
   return op;
+}
+
+proto::TensorNode SliceOperation::ToProto(
+    const std::vector<std::string>& inputs) const {
+  CHECK_EQ(inputs.size(), 1);
+  proto::TensorNode result;
+  result.set_name(name());
+  result.set_op_type(proto::OpType::SLICE);
+  *result.mutable_out_dimension() = output_shape().AsProto();
+  result.add_input_names(inputs[0]);
+
+  proto::Options::IntegerListOption& begin_option =
+      *result.mutable_options()->add_integer_list_options();
+  begin_option.set_name(kOptionsBeginKey);
+  for (int64_t v : begin_) {
+    begin_option.add_value(v);
+  }
+
+  proto::Options::IntegerListOption& size_option =
+      *result.mutable_options()->add_integer_list_options();
+  size_option.set_name(kOptionsSizeKey);
+  for (int64_t v : sizes_) {
+    size_option.add_value(v);
+  }
+
+  result.set_output_type(proto::TensorNode::FLOAT32);
+  return result;
 }
 
 }  // namespace tf_opt

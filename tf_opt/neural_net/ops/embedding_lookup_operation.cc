@@ -45,15 +45,6 @@ absl::StatusOr<EmbeddingLookupOperation> EmbeddingLookupOperation::Create(
       output_shape);
 }
 
-MaybeForGraph<EmbeddingLookupOperation>
-EmbeddingLookupOperation::CreateForGraph(std::string op_name,
-                                         const Operation* params,
-                                         const Operation* ids) {
-  return FromMaybeCreated(
-      Create(std::move(op_name), params->output_shape(), ids->output_shape()),
-      {params, ids});
-}
-
 absl::StatusOr<EmbeddingLookupOperation>
 EmbeddingLookupOperation::GenericCreate(std::string op_name,
                                         std::vector<Shape> input_shapes,
@@ -69,6 +60,19 @@ EmbeddingLookupOperation::GenericCreate(std::string op_name,
   TFOPT_RETURN_IF_ERROR(
       validator.ExpectOutputShapeEquals(op.output_shape(), output_shape));
   return std::move(op);
+}
+
+proto::TensorNode EmbeddingLookupOperation::ToProto(
+    const std::vector<std::string>& inputs) const {
+  CHECK_EQ(inputs.size(), 2);
+  proto::TensorNode result;
+  result.set_name(name());
+  result.set_op_type(proto::OpType::EMBEDDING_LOOKUP);
+  *result.mutable_out_dimension() = output_shape().AsProto();
+  result.add_input_names(inputs[0]);
+  result.add_input_names(inputs[1]);
+  result.set_output_type(proto::TensorNode::FLOAT32);
+  return result;
 }
 
 }  // namespace tf_opt

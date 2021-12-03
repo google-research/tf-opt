@@ -40,13 +40,6 @@ absl::StatusOr<MatmulOperation> MatmulOperation::Create(std::string op_name,
                          std::move(output_shape));
 }
 
-MaybeForGraph<MatmulOperation> MatmulOperation::CreateForGraph(
-    std::string op_name, const Operation* left, const Operation* right) {
-  return FromMaybeCreated(
-      Create(std::move(op_name), left->output_shape(), right->output_shape()),
-      {left, right});
-}
-
 absl::StatusOr<MatmulOperation> MatmulOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {

@@ -50,13 +50,6 @@ absl::StatusOr<ReluOperation> ReluOperation::Create(
   return ReluOperation(op_name, input_shape, formulation);
 }
 
-MaybeForGraph<ReluOperation> ReluOperation::CreateForGraph(
-    std::string op_name, const Operation* input,
-    const ReluImplementationType formulation) {
-  return FromMaybeCreated(
-      Create(std::move(op_name), input->output_shape(), formulation), {input});
-}
-
 absl::StatusOr<ReluOperation> ReluOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {
@@ -66,7 +59,7 @@ absl::StatusOr<ReluOperation> ReluOperation::GenericCreate(
   TFOPT_RETURN_IF_ERROR(validator.ExpectOptionsSizeAtMost(options.size(), 1));
   TFOPT_RETURN_IF_ERROR(
       validator.ExpectOutputShapeEquals(output_shape, input_shapes[0]));
-  ReluImplementationType formulation = ReluImplementationType::kBigM;
+  ReluImplementationType formulation = kDefaultRelu;
   {
     // If the formulation is set in options, override the default
     const std::string formulation_name =
@@ -92,11 +85,11 @@ proto::TensorNode ReluOperation::ToProto(
   result.set_op_type(proto::OpType::RELU);
   *result.mutable_out_dimension() = output_shape().AsProto();
   result.add_input_names(inputs[0]);
-  if (formulation() != ReluImplementationType::kBigM) {
+  if (formulation() != kDefaultRelu) {
     proto::Options::StringOption* formulation_option =
         result.mutable_options()->add_string_options();
     formulation_option->set_name(kOptionsFormulationKey);
-    formulation_option->set_name(ToString(formulation()));
+    formulation_option->set_value(ToString(formulation()));
   }
   result.set_output_type(proto::TensorNode::FLOAT32);
   return result;

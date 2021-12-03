@@ -42,21 +42,6 @@ TEST(ReluOperationTest, SimpleCreate) {
   EXPECT_EQ(op.formulation(), ReluImplementationType::kBigM);
 }
 
-TEST(ReluOperationTest, CreateForGraph) {
-  const ConstantOperation constant_op("const1", DoubleTensor({2.0, 4.0}));
-  const Shape input_shape({2});
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      ReluOperation::CreateForGraph("r1", &constant_op,
-                                    ReluImplementationType::kBigM));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&constant_op));
-  const ReluOperation& op = op_args_pair.first;
-
-  EXPECT_THAT(op, OperationArgsAre("r1", {input_shape}, input_shape));
-  EXPECT_EQ(op.input(), input_shape);
-  EXPECT_EQ(op.formulation(), ReluImplementationType::kBigM);
-}
-
 Operation::Options MakeOptions(std::string relu_impl_name = "") {
   Operation::Options options;
   if (!relu_impl_name.empty()) {

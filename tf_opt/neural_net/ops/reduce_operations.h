@@ -73,10 +73,6 @@ class LinearReduceOperation : public Operation {
   static absl::StatusOr<LinearReduceOperation<R>> Create(
       std::string op_name, Shape input_shape, const std::vector<int64_t>& axes);
 
-  static MaybeForGraph<LinearReduceOperation<R>> CreateForGraph(
-      std::string op_name, const Operation* input,
-      const std::vector<int64_t>& axes);
-
   // Expected input format:
   //   input_shapes: The shape of a single tensor, to be reduced,
   //   output_shape: The shape of the result, like the input with the index
@@ -119,12 +115,7 @@ class NonlinearReduceOperation : public Operation {
 
   static absl::StatusOr<NonlinearReduceOperation<R>> Create(
       std::string op_name, Shape input_shape, const std::vector<int64_t>& axes,
-      MaximumImplementationType formulation = MaximumImplementationType::kBigM);
-
-  static MaybeForGraph<NonlinearReduceOperation<R>> CreateForGraph(
-      std::string op_name, const Operation* input,
-      const std::vector<int64_t>& axes,
-      MaximumImplementationType formulation = MaximumImplementationType::kBigM);
+      MaximumImplementationType formulation = kDefaultMaximum);
 
   // Expected input format:
   //   input_shapes: The shape of a single tensor, to be reduced,
@@ -185,15 +176,6 @@ absl::StatusOr<LinearReduceOperation<R>> LinearReduceOperation<R>::Create(
 }
 
 template <LinearReduction R>
-MaybeForGraph<LinearReduceOperation<R>>
-LinearReduceOperation<R>::CreateForGraph(std::string op_name,
-                                         const Operation* input,
-                                         const std::vector<int64_t>& axes) {
-  return FromMaybeCreated(
-      Create(std::move(op_name), input->output_shape(), axes), {input});
-}
-
-template <LinearReduction R>
 absl::StatusOr<LinearReduceOperation<R>>
 LinearReduceOperation<R>::GenericCreate(std::string op_name,
                                         std::vector<Shape> input_shapes,
@@ -251,16 +233,6 @@ absl::StatusOr<NonlinearReduceOperation<R>> NonlinearReduceOperation<R>::Create(
 }
 
 template <NonlinearReduction R>
-MaybeForGraph<NonlinearReduceOperation<R>>
-NonlinearReduceOperation<R>::CreateForGraph(
-    std::string op_name, const Operation* input,
-    const std::vector<int64_t>& axes, MaximumImplementationType formulation) {
-  return FromMaybeCreated(
-      Create(std::move(op_name), input->output_shape(), axes, formulation),
-      {input});
-}
-
-template <NonlinearReduction R>
 absl::StatusOr<NonlinearReduceOperation<R>>
 NonlinearReduceOperation<R>::GenericCreate(std::string op_name,
                                            std::vector<Shape> input_shapes,
@@ -273,8 +245,7 @@ NonlinearReduceOperation<R>::GenericCreate(std::string op_name,
   TFOPT_ASSIGN_OR_RETURN(
       const std::vector<int64_t> axes,
       validator.IntegerListOption(options, reduce::kOptionsAxesKey));
-  MaximumImplementationType formulation =
-      MaximumImplementationType::kOptimalBigM;
+  MaximumImplementationType formulation = kDefaultMaximum;
   {
     std::string formulation_name =
         std::string(reduce::kOptionsFormulationDefault);
@@ -319,7 +290,7 @@ proto::TensorNode NonlinearReduceOperation<R>::ToProto(
   axes->set_name(reduce::kOptionsAxesKey.data(),
                  reduce::kOptionsAxesKey.size());
   *axes->mutable_value() = {axes_.begin(), axes_.end()};
-  if (formulation_ != MaximumImplementationType::kOptimalBigM) {
+  if (formulation_ != kDefaultMaximum) {
     proto::Options::StringOption* formulation =
         result.mutable_options()->add_string_options();
     formulation->set_name(reduce::kOptionsFormulationKey.data(),

@@ -33,11 +33,6 @@ class MatmulOperation : public Operation {
                                                 Shape left_shape,
                                                 Shape right_shape);
 
-  // TODO: replace this by a variadic template function.
-  static MaybeForGraph<MatmulOperation> CreateForGraph(std::string op_name,
-                                                       const Operation* left,
-                                                       const Operation* right);
-
   // Expected input format:
   //   input_shapes: The shapes of the tensors to multiply (two of them).
   //   output_shape: The shape to produce, follows broadcasting rules.

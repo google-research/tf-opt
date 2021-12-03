@@ -88,35 +88,6 @@ TYPED_TEST(NonlinearReduceOperationTest, CreateBadInput) {
               StatusIs(kInvalidArgument));
 }
 
-TYPED_TEST(LinearReduceOperationTest, CreateForGraph) {
-  const Shape input({2, 6, 4});
-  const ConstantOperation constant_op("const1", DoubleTensor(input));
-  const std::vector<int64_t> axes = {1};
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      TypeParam::CreateForGraph("reduce1", &constant_op, axes));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&constant_op));
-  const TypeParam& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("reduce1", {input}, Shape({2, 4})));
-  EXPECT_EQ(op.input(), input);
-  EXPECT_EQ(op.axes(), axes);
-}
-
-TYPED_TEST(NonlinearReduceOperationTest, CreateForGraph) {
-  const Shape input({2, 6, 4});
-  const ConstantOperation constant_op("const1", DoubleTensor(input));
-  const std::vector<int64_t> axes = {1};
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      TypeParam::CreateForGraph("reduce1", &constant_op, axes,
-                                MaximumImplementationType::kOptimalBigM));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&constant_op));
-  const TypeParam& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("reduce1", {input}, Shape({2, 4})));
-  EXPECT_EQ(op.input(), input);
-  EXPECT_EQ(op.axes(), axes);
-  EXPECT_EQ(op.formulation(), MaximumImplementationType::kOptimalBigM);
-}
 
 Operation::Options MakeOptions(const std::vector<int64_t>& axes) {
   Operation::Options options;

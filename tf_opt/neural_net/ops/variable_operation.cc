@@ -31,11 +31,6 @@ absl::StatusOr<VariableOperation> VariableOperation::Create(std::string op_name,
   return VariableOperation(std::move(op_name), std::move(shape));
 }
 
-MaybeForGraph<VariableOperation> VariableOperation::CreateForGraph(
-    std::string op_name, Shape shape) {
-  return FromMaybeCreated(Create(std::move(op_name), std::move(shape)), {});
-}
-
 absl::StatusOr<VariableOperation> VariableOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {

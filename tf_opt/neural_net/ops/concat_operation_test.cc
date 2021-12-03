@@ -49,19 +49,6 @@ TEST(ConcatOperationTest, SimpleInitializeIncompatibleShapes) {
               StatusIs(kInvalidArgument));
 }
 
-TEST(ConcatOperationTest, InitializeForGraph) {
-  const ConstantOperation c1("const1", DoubleTensor({2.0, 4.0}));
-  const ConstantOperation c2("const2", DoubleTensor({1.0, 2.0, 3.0}));
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      ConcatOperation::CreateForGraph("concat1", {&c1, &c2}, 0));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&c1, &c2));
-  const ConcatOperation& op = op_args_pair.first;
-  EXPECT_THAT(
-      op, OperationArgsAre("concat1", {Shape({2}), Shape({3})}, Shape({5})));
-  EXPECT_EQ(op.axis(), 0);
-}
-
 namespace {
 
 Operation::Options MakeOptions(int axis) {

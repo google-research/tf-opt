@@ -32,6 +32,9 @@ enum class ClippedReluImplementationType {
   kIncrementalBigM,
 };
 
+constexpr ClippedReluImplementationType kDefaultClippedRelu =
+    ClippedReluImplementationType::kUnaryBigM;
+
 const char* ToString(ClippedReluImplementationType clipped_relu_impl);
 
 bool ClippedReluImplFromString(

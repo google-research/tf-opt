@@ -34,7 +34,7 @@ class OperationVisitor;
 // Base class for an operation in a neural network. Subclassed based on
 // operation type.
 //
-// All subclasses must have a a static initialization method with the signature:
+// All subclasses must have a static initialization method with the signature:
 //   static absl::StatusOr<AddOperation> GenericCreate(
 //       string op_name, std::vector<Shape> input_shapes,
 //       Shape output_shape, const Options& options);
@@ -84,7 +84,7 @@ class Operation {
   virtual void Accept(OperationVisitor* visitor) const = 0;
 
   virtual proto::TensorNode ToProto(
-      const std::vector<std::string>& inputs) const;
+      const std::vector<std::string>& inputs) const = 0;
 
  protected:
   Operation(std::string name, std::vector<Shape> input_shapes,
@@ -99,19 +99,6 @@ class Operation {
 template <typename OperationType, typename... Args>
 OperationType CreateOrDie(Args&&... args) {
   return std::move(OperationType::Create(std::forward<Args>(args)...)).value();
-}
-
-// TODO: replace by templated functions in NeuralNetGraph.
-template <typename OperationType>
-using MaybeForGraph =
-    absl::StatusOr<std::pair<OperationType, std::vector<const Operation*>>>;
-
-template <typename OperationType>
-MaybeForGraph<OperationType> FromMaybeCreated(
-    absl::StatusOr<OperationType> maybe_op,
-    std::vector<const Operation*> operations) {
-  if (!maybe_op.ok()) return std::move(maybe_op).status();
-  return std::make_pair(std::move(maybe_op).value(), std::move(operations));
 }
 
 }  // namespace tf_opt

@@ -48,11 +48,6 @@ class SliceOperation : public Operation {
                                                std::vector<int64_t> begin,
                                                std::vector<int64_t> size);
 
-  // TODO: replace this by a variadic template function.
-  static MaybeForGraph<SliceOperation> CreateForGraph(
-      std::string op_name, const Operation* input, std::vector<int64_t> begin,
-      std::vector<int64_t> size);
-
   // Expected input format:
   //   input_shapes: The shape of the tensor to slice,
   //       input_shapes.size() == 1.
@@ -70,6 +65,9 @@ class SliceOperation : public Operation {
   void Accept(OperationVisitor* visitor) const override {
     visitor->Visit(*this);
   }
+
+  proto::TensorNode ToProto(
+      const std::vector<std::string>& inputs) const override;
 
  private:
   SliceOperation(std::string op_name, Shape input_shape, Shape output_shape,

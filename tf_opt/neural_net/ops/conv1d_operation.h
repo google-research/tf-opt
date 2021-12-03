@@ -37,11 +37,6 @@ class Conv1dOperation : public Operation {
                                                 Shape filter_shape, int stride,
                                                 PaddingType padding);
 
-  // TODO: replace this by a variadic template function.
-  static MaybeForGraph<Conv1dOperation> CreateForGraph(
-      std::string op_name, const Operation* input_value,
-      const Operation* filter, int stride, PaddingType padding);
-
   // Expected input format:
   //   input_shapes: Shapes of two tensors, first the "value" and then the
   //       "filters", as in tf.nn.conv1d:
@@ -63,6 +58,9 @@ class Conv1dOperation : public Operation {
   void Accept(OperationVisitor* visitor) const override {
     visitor->Visit(*this);
   }
+
+  proto::TensorNode ToProto(
+      const std::vector<std::string>& inputs) const override;
 
  private:
   Conv1dOperation(std::string op_name, Shape input_value_shape,

@@ -49,21 +49,6 @@ TEST(ExpandDimsOperationTest, SimpleCreateBadAxis) {
               StatusIs(kInvalidArgument));
 }
 
-TEST(ExpandDimsOperationTest, CreateForGraph) {
-  const ConstantOperation constant_op("const1", DoubleTensor(Shape({2, 4})));
-  const int axis = 1;
-  const Shape input_shape({2, 4});
-  const Shape output_shape({2, 1, 4});
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      ExpandDimsOperation::CreateForGraph("e1", &constant_op, axis));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&constant_op));
-  const ExpandDimsOperation& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("e1", {input_shape}, output_shape));
-  EXPECT_EQ(op.input(), input_shape);
-  EXPECT_EQ(op.axis(), axis);
-}
-
 Operation::Options MakeOptions(const int axis) {
   Operation::Options options;
   options.integer_options[ExpandDimsOperation::kOptionsAxisKey] = axis;

@@ -35,9 +35,6 @@ class ConstantOperation : public Operation {
   static absl::StatusOr<ConstantOperation> Create(std::string op_name,
                                                   DoubleTensor value);
 
-  static MaybeForGraph<ConstantOperation> CreateForGraph(std::string op_name,
-                                                         DoubleTensor value);
-
   // Not supported for ConstantOperation, will CHECK fail.  As implemented, a
   // ConstantOperation owns the DoubleTensor that is its data, but there is no
   // way to wire this in through GenericInitialize.

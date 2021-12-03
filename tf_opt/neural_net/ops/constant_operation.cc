@@ -31,11 +31,6 @@ absl::StatusOr<ConstantOperation> ConstantOperation::Create(
   return ConstantOperation(std::move(op_name), std::move(value));
 }
 
-MaybeForGraph<ConstantOperation> ConstantOperation::CreateForGraph(
-    std::string op_name, DoubleTensor value) {
-  return FromMaybeCreated(Create(std::move(op_name), std::move(value)), {});
-}
-
 absl::StatusOr<ConstantOperation> ConstantOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {

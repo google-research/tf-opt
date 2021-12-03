@@ -35,12 +35,6 @@ absl::StatusOr<ExpandDimsOperation> ExpandDimsOperation::Create(
                              std::move(output_shape), axis);
 }
 
-MaybeForGraph<ExpandDimsOperation> ExpandDimsOperation::CreateForGraph(
-    std::string op_name, const Operation* input, const int axis) {
-  return FromMaybeCreated(
-      Create(std::move(op_name), input->output_shape(), axis), {input});
-}
-
 absl::StatusOr<ExpandDimsOperation> ExpandDimsOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {
@@ -57,6 +51,24 @@ absl::StatusOr<ExpandDimsOperation> ExpandDimsOperation::GenericCreate(
   TFOPT_RETURN_IF_ERROR(
       validator.ExpectOutputShapeEquals(op.output_shape(), output_shape));
   return std::move(op);
+}
+
+proto::TensorNode ExpandDimsOperation::ToProto(
+    const std::vector<std::string>& inputs) const {
+  CHECK_EQ(inputs.size(), 1);
+  proto::TensorNode result;
+  result.set_name(name());
+  result.set_op_type(proto::OpType::EXPAND_DIMS);
+  *result.mutable_out_dimension() = output_shape().AsProto();
+  result.add_input_names(inputs[0]);
+
+  proto::Options::IntegerOption& axis_option =
+      *result.mutable_options()->add_integer_options();
+  axis_option.set_name(kOptionsAxisKey);
+  axis_option.set_value(axis_);
+
+  result.set_output_type(proto::TensorNode::FLOAT32);
+  return result;
 }
 
 }  // namespace tf_opt

@@ -45,11 +45,6 @@ class ReshapeOperation : public Operation {
                                                  Shape input_shape,
                                                  Shape output_shape);
 
-  // TODO: replace this by a variadic template function.
-  static MaybeForGraph<ReshapeOperation> CreateForGraph(std::string op_name,
-                                                        const Operation* input,
-                                                        Shape output_shape);
-
   // Expected input format:
   //   input_shapes: The shape a single tensor, to be reshaped.
   //   output_shape: The shape to produce, same number of elements as input.
@@ -63,6 +58,9 @@ class ReshapeOperation : public Operation {
   void Accept(OperationVisitor* visitor) const override {
     visitor->Visit(*this);
   }
+
+  proto::TensorNode ToProto(
+      const std::vector<std::string>& inputs) const override;
 
  private:
   ReshapeOperation(std::string op_name, Shape input_shape, Shape output_shape)

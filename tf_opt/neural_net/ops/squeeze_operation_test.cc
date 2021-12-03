@@ -60,21 +60,6 @@ TEST(SqueezeOperationTest, SimpleCreateBadAxis) {
               StatusIs(kInvalidArgument));
 }
 
-TEST(SqueezeOperationTest, CreateForGraph) {
-  const Shape input_shape({2, 1, 1, 4, 1});
-  const ConstantOperation constant_op("const1", DoubleTensor(input_shape));
-  const std::vector<int> axes({1, 2});
-  const Shape output_shape({2, 4, 1});
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      SqueezeOperation::CreateForGraph("s1", &constant_op, axes));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&constant_op));
-  const SqueezeOperation& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("s1", {input_shape}, output_shape));
-  EXPECT_EQ(op.input(), input_shape);
-  EXPECT_EQ(op.axes(), axes);
-}
-
 Operation::Options MakeOptions(const std::vector<int64_t>& axes) {
   Operation::Options options;
   options.integer_list_options[SqueezeOperation::kOptionsAxesKey] = axes;

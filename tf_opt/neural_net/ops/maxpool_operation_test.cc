@@ -71,11 +71,6 @@ class MaxpoolOperationTest : public ::testing::Test {
                                     padding_, formulation_);
   }
 
-  MaybeForGraph<MaxpoolOperation> CreateForGraph() const {
-    return MaxpoolOperation::CreateForGraph(op_name_, &input_operation_, ksize_,
-                                            stride_, padding_, formulation_);
-  }
-
   absl::StatusOr<MaxpoolOperation> GenericCreate() const {
     return MaxpoolOperation::GenericCreate(op_name_, generic_inputs_,
                                            output_shape_, options_);
@@ -117,13 +112,6 @@ TEST_F(MaxpoolOperationTest, CreateBadInput) {
   input_shape_ = Shape({3, 3, 1});
   EXPECT_THAT(Create(), StatusIs(kInvalidArgument,
                                  HasSubstr("Expected input to be rank four")));
-}
-
-TEST_F(MaxpoolOperationTest, CreateForGraph) {
-  TFOPT_ASSERT_OK_AND_ASSIGN(const auto op_args_pair, CreateForGraph());
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&input_operation_));
-  const MaxpoolOperation& op = op_args_pair.first;
-  ExpectOperationCorrect(op);
 }
 
 TEST_F(MaxpoolOperationTest, GenericCreate) {

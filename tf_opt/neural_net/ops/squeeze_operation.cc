@@ -53,12 +53,6 @@ absl::StatusOr<SqueezeOperation> SqueezeOperation::Create(
                           std::move(result_shape), std::move(axes));
 }
 
-MaybeForGraph<SqueezeOperation> SqueezeOperation::CreateForGraph(
-    std::string op_name, const Operation* input, std::vector<int> axes) {
-  return FromMaybeCreated(
-      Create(std::move(op_name), input->output_shape(), axes), {input});
-}
-
 absl::StatusOr<SqueezeOperation> SqueezeOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {
@@ -74,6 +68,28 @@ absl::StatusOr<SqueezeOperation> SqueezeOperation::GenericCreate(
   TFOPT_RETURN_IF_ERROR(
       validator.ExpectOutputShapeEquals(op.output_shape(), output_shape));
   return op;
+}
+
+proto::TensorNode SqueezeOperation::ToProto(
+    const std::vector<std::string>& inputs) const {
+  CHECK_EQ(inputs.size(), 1);
+  proto::TensorNode result;
+  result.set_name(name());
+  result.set_op_type(proto::OpType::SQUEEZE);
+  *result.mutable_out_dimension() = output_shape().AsProto();
+  result.add_input_names(inputs[0]);
+
+  if (!axes_.empty()) {
+    proto::Options::IntegerListOption& axes_option =
+        *result.mutable_options()->add_integer_list_options();
+    axes_option.set_name(kOptionsAxesKey);
+    for (const int v : axes_) {
+      axes_option.add_value(v);
+    }
+  }
+
+  result.set_output_type(proto::TensorNode::FLOAT32);
+  return result;
 }
 
 }  // namespace tf_opt

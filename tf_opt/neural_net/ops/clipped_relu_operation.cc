@@ -70,14 +70,6 @@ absl::StatusOr<ClippedReluOperation> ClippedReluOperation::Create(
                               formulation);
 }
 
-MaybeForGraph<ClippedReluOperation> ClippedReluOperation::CreateForGraph(
-    std::string op_name, const Operation* input, const double cap,
-    const ClippedReluImplementationType formulation) {
-  return FromMaybeCreated(
-      Create(std::move(op_name), input->output_shape(), cap, formulation),
-      {input});
-}
-
 absl::StatusOr<ClippedReluOperation> ClippedReluOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {
@@ -89,8 +81,7 @@ absl::StatusOr<ClippedReluOperation> ClippedReluOperation::GenericCreate(
       validator.ExpectOutputShapeEquals(output_shape, input_shapes[0]));
   TFOPT_ASSIGN_OR_RETURN(const double cap,
                          validator.DoubleOption(options, kOptionsCapKey));
-  ClippedReluImplementationType formulation =
-      ClippedReluImplementationType::kUnaryBigM;
+  ClippedReluImplementationType formulation = kDefaultClippedRelu;
   {
     // If the formulation is set in options, override the default
     const std::string formulation_name =
@@ -107,6 +98,28 @@ absl::StatusOr<ClippedReluOperation> ClippedReluOperation::GenericCreate(
   }
   return Create(std::move(op_name), std::move(input_shapes[0]), cap,
                 formulation);
+}
+
+proto::TensorNode ClippedReluOperation::ToProto(
+    const std::vector<std::string>& inputs) const {
+  CHECK_EQ(inputs.size(), 1);
+  proto::TensorNode result;
+  result.set_name(name());
+  result.set_op_type(proto::OpType::CLIPPED_RELU);
+  *result.mutable_out_dimension() = output_shape().AsProto();
+  result.add_input_names(inputs[0]);
+  if (formulation() != kDefaultClippedRelu) {
+    proto::Options::StringOption* formulation_option =
+        result.mutable_options()->add_string_options();
+    formulation_option->set_name(kOptionsFormulationKey);
+    formulation_option->set_value(ToString(formulation()));
+  }
+  proto::Options::DoubleOption& cap_option =
+      *result.mutable_options()->add_double_options();
+  cap_option.set_name(kOptionsCapKey);
+  cap_option.set_value(cap_);
+  result.set_output_type(proto::TensorNode::FLOAT32);
+  return result;
 }
 
 }  // namespace tf_opt

@@ -36,13 +36,6 @@ absl::StatusOr<ReshapeOperation> ReshapeOperation::Create(std::string op_name,
                           std::move(output_shape));
 }
 
-MaybeForGraph<ReshapeOperation> ReshapeOperation::CreateForGraph(
-    std::string op_name, const Operation* input, Shape output_shape) {
-  return FromMaybeCreated(Create(std::move(op_name), input->output_shape(),
-                                 std::move(output_shape)),
-                          {input});
-}
-
 absl::StatusOr<ReshapeOperation> ReshapeOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {
@@ -54,6 +47,18 @@ absl::StatusOr<ReshapeOperation> ReshapeOperation::GenericCreate(
                          Create(std::move(op_name), std::move(input_shapes[0]),
                                 std::move(output_shape)));
   return op;
+}
+
+proto::TensorNode ReshapeOperation::ToProto(
+    const std::vector<std::string>& inputs) const {
+  CHECK_EQ(inputs.size(), 1);
+  proto::TensorNode result;
+  result.set_name(name());
+  result.set_op_type(proto::OpType::RESHAPE);
+  *result.mutable_out_dimension() = output_shape().AsProto();
+  result.add_input_names(inputs[0]);
+  result.set_output_type(proto::TensorNode::FLOAT32);
+  return result;
 }
 
 }  // namespace tf_opt

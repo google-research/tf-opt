@@ -42,18 +42,6 @@ absl::StatusOr<ConcatOperation> ConcatOperation::Create(
                          std::move(output_shape), axis);
 }
 
-MaybeForGraph<ConcatOperation> ConcatOperation::CreateForGraph(
-    std::string op_name, const std::vector<const Operation*>& inputs,
-    const int axis) {
-  std::vector<Shape> input_shapes;
-  input_shapes.reserve(inputs.size());
-  for (const Operation* input : inputs) {
-    input_shapes.push_back(input->output_shape());
-  }
-  return FromMaybeCreated(Create(std::move(op_name), input_shapes, axis),
-                          inputs);
-}
-
 absl::StatusOr<ConcatOperation> ConcatOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes,
     const Shape output_shape, const Options& options) {

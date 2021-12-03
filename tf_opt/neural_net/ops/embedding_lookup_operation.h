@@ -51,10 +51,6 @@ class EmbeddingLookupOperation : public Operation {
                                                          Shape params_shape,
                                                          Shape ids_shape);
 
-  // TODO: replace this by a variadic template function.
-  static MaybeForGraph<EmbeddingLookupOperation> CreateForGraph(
-      std::string op_name, const Operation* params, const Operation* ids);
-
   // Input format:
   //   input_shapes: Contains the shapes of:
   //     (1) the params tensor (the weights to look up)
@@ -72,6 +68,9 @@ class EmbeddingLookupOperation : public Operation {
   void Accept(OperationVisitor* visitor) const override {
     visitor->Visit(*this);
   }
+
+  proto::TensorNode ToProto(
+      const std::vector<std::string>& inputs) const override;
 
  private:
   EmbeddingLookupOperation(std::string op_name, std::vector<Shape> input_shapes,

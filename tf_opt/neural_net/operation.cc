@@ -56,10 +56,5 @@ Operation::Operation(std::string name, std::vector<Shape> input_shapes,
       input_shapes_(std::move(input_shapes)),
       output_shape_(std::move(output_shape)) {}
 
-proto::TensorNode Operation::ToProto(
-    const std::vector<std::string>& inputs) const {
-  LOG(FATAL) << "Serialization not implemented for this op type, with name: "
-             << name();
-}
 
 }  // namespace tf_opt

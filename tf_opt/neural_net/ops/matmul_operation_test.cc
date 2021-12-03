@@ -49,25 +49,6 @@ TEST(MatmulOperationTest, SimpleInitializeIncompatibleShapes) {
               StatusIs(kInvalidArgument));
 }
 
-TEST(MatmulOperationTest, CreateForGraph) {
-  // Shape {2, 3}
-  const ConstantOperation c1(
-      "const1", DoubleTensor::CreateMatrix({{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}}));
-  // Shape {3, 2}
-  const ConstantOperation c2(
-      "const2",
-      DoubleTensor::CreateMatrix({{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}}));
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      MatmulOperation::CreateForGraph("matmul1", &c1, &c2));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&c1, &c2));
-  const MatmulOperation& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("matmul1", {Shape({2, 3}), Shape({3, 2})},
-                                   Shape({2, 2})));
-  EXPECT_EQ(op.left(), Shape({2, 3}));
-  EXPECT_EQ(op.right(), Shape({3, 2}));
-}
-
 TEST(MatmulOperationTest, GenericCreate) {
   const Shape left({2, 4});
   const Shape right({4, 3});

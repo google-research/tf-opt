@@ -47,11 +47,7 @@ class ReluOperation : public Operation {
 
   static absl::StatusOr<ReluOperation> Create(
       std::string op_name, Shape input_shape,
-      ReluImplementationType formulation = ReluImplementationType::kBigM);
-
-  static MaybeForGraph<ReluOperation> CreateForGraph(
-      std::string op_name, const Operation* input,
-      ReluImplementationType formulation = ReluImplementationType::kBigM);
+      ReluImplementationType formulation = kDefaultRelu);
 
   // Expected input format:
   //   input_shapes: The dimensions of exactly one tensor to transform.

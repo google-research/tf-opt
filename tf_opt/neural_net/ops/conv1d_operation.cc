@@ -48,15 +48,6 @@ absl::StatusOr<Conv1dOperation> Conv1dOperation::Create(
                          stride, padding);
 }
 
-MaybeForGraph<Conv1dOperation> Conv1dOperation::CreateForGraph(
-    std::string op_name, const Operation* input_value, const Operation* filter,
-    const int stride, const PaddingType padding) {
-  return FromMaybeCreated(
-      Create(std::move(op_name), input_value->output_shape(),
-             filter->output_shape(), stride, padding),
-      {input_value, filter});
-}
-
 absl::StatusOr<Conv1dOperation> Conv1dOperation::GenericCreate(
     std::string op_name, std::vector<Shape> input_shapes, Shape output_shape,
     const Options& options) {
@@ -80,6 +71,28 @@ absl::StatusOr<Conv1dOperation> Conv1dOperation::GenericCreate(
   TFOPT_RETURN_IF_ERROR(
       validator.ExpectOutputShapeEquals(output_shape, op.output_shape()));
   return std::move(op);
+}
+
+proto::TensorNode Conv1dOperation::ToProto(
+    const std::vector<std::string>& inputs) const {
+  CHECK_EQ(inputs.size(), 2);
+  proto::TensorNode result;
+  result.set_name(name());
+  result.set_op_type(proto::OpType::CONV1D);
+  *result.mutable_out_dimension() = output_shape().AsProto();
+  result.add_input_names(inputs[0]);
+  result.add_input_names(inputs[1]);
+  proto::Options::StringOption& padding_option =
+      *result.mutable_options()->add_string_options();
+  padding_option.set_name(kOptionsPaddingKey);
+  padding_option.set_value(ToString(padding()));
+
+  proto::Options::IntegerOption& stride_option =
+      *result.mutable_options()->add_integer_options();
+  stride_option.set_name(kOptionsStrideKey);
+  stride_option.set_value(stride_);
+  result.set_output_type(proto::TensorNode::FLOAT32);
+  return result;
 }
 
 }  // namespace tf_opt

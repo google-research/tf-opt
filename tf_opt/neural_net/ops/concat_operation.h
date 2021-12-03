@@ -34,11 +34,6 @@ class ConcatOperation : public Operation {
                                                 std::vector<Shape> input_shapes,
                                                 int axis);
 
-  // TODO: replace this by a variadic template function.
-  static MaybeForGraph<ConcatOperation> CreateForGraph(
-      std::string op_name, const std::vector<const Operation*>& inputs,
-      int axis);
-
   // Expected input format:
   //   input_shapes: The shapes of a non-empty list of tensors that have the
   //     same number of dimensions, and the same size in all dimensions except

@@ -57,20 +57,6 @@ TYPED_TEST(BinaryArithmeticOperationTest, SimpleCreateIncompatibleShapes) {
               StatusIs(kInvalidArgument));
 }
 
-TYPED_TEST(BinaryArithmeticOperationTest, CreateForGraph) {
-  const ConstantOperation constant_op("const1", DoubleTensor({2.0, 4.0}));
-  const Shape input_shape({2});
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      TypeParam::CreateForGraph("bin_op1", &constant_op, &constant_op));
-  EXPECT_THAT(
-      op_args_pair.first,
-      OperationArgsAre("bin_op1", {input_shape, input_shape}, input_shape));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&constant_op, &constant_op));
-  EXPECT_EQ(op_args_pair.first.left(), input_shape);
-  EXPECT_EQ(op_args_pair.first.right(), input_shape);
-}
-
 TYPED_TEST(BinaryArithmeticOperationTest, GenericCreate) {
   const Shape left({3, 1, 2});
   const Shape right({1, 5, 2});

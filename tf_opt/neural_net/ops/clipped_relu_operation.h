@@ -51,13 +51,7 @@ class ClippedReluOperation : public Operation {
 
   static absl::StatusOr<ClippedReluOperation> Create(
       std::string op_name, Shape input_shape, double cap,
-      ClippedReluImplementationType formulation =
-          ClippedReluImplementationType::kUnaryBigM);
-
-  static MaybeForGraph<ClippedReluOperation> CreateForGraph(
-      std::string op_name, const Operation* input, double cap,
-      ClippedReluImplementationType formulation =
-          ClippedReluImplementationType::kUnaryBigM);
+      ClippedReluImplementationType formulation = kDefaultClippedRelu);
 
   // Expected input format:
   //   input_shapes: the dimensions of a single tensor to transform.
@@ -78,6 +72,9 @@ class ClippedReluOperation : public Operation {
   void Accept(OperationVisitor* visitor) const override {
     visitor->Visit(*this);
   }
+
+  proto::TensorNode ToProto(
+      const std::vector<std::string>& inputs) const override;
 
  private:
   ClippedReluOperation(std::string op_name, Shape input_shape, double cap,

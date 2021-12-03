@@ -60,23 +60,6 @@ TEST(Conv2dOperationTest, SimpleCreateBadShape) {
               StatusIs(kInvalidArgument));
 }
 
-TEST(Conv2dOperationTest, CreateForGraph) {
-  const ConstantOperation input("input", DoubleTensor(Shape({1, 4, 4, 3})));
-  const ConstantOperation filter("filter", DoubleTensor(Shape({2, 2, 3, 5})));
-  const Position2D stride(1, 1);
-  const PaddingType padding = PaddingType::SAME;
-  TFOPT_ASSERT_OK_AND_ASSIGN(const auto op_args_pair,
-                             Conv2dOperation::CreateForGraph(
-                                 "conv2d", &input, &filter, stride, padding));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&input, &filter));
-  const Conv2dOperation& op = op_args_pair.first;
-  EXPECT_THAT(
-      op, OperationArgsAre("conv2d", {Shape({1, 4, 4, 3}), Shape({2, 2, 3, 5})},
-                           Shape({1, 4, 4, 5})));
-  EXPECT_EQ(op.input_value(), Shape({1, 4, 4, 3}));
-  EXPECT_EQ(op.filter(), Shape({2, 2, 3, 5}));
-}
-
 namespace {
 
 Operation::Options MakeOptions(const Position2D stride,

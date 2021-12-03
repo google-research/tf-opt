@@ -36,9 +36,6 @@ class VariableOperation : public Operation {
   static absl::StatusOr<VariableOperation> Create(std::string op_name,
                                                   Shape shape);
 
-  static MaybeForGraph<VariableOperation> CreateForGraph(std::string op_name,
-                                                         Shape shape);
-
   // Expected input format:
   //   input_shapes: Should be empty.
   //   output_shape: A single shape, the shape of the variable to create.

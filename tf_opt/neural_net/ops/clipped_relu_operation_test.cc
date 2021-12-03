@@ -52,22 +52,6 @@ TEST(ClippedReluOperationTest, SimpleCreateBadCap) {
               StatusIs(kInvalidArgument));
 }
 
-TEST(ClippedReluOperationTest, CreateForGraph) {
-  const ConstantOperation constant_op("const1", DoubleTensor({2.0, 4.0}));
-  const Shape input_shape({2});
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      ClippedReluOperation::CreateForGraph(
-          "cr1", &constant_op, 6.0,
-          ClippedReluImplementationType::kIncrementalBigM));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&constant_op));
-  const ClippedReluOperation& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("cr1", {input_shape}, input_shape));
-  EXPECT_EQ(op.input(), input_shape);
-  EXPECT_EQ(op.formulation(), ClippedReluImplementationType::kIncrementalBigM);
-  EXPECT_EQ(op.cap(), 6.0);
-}
-
 Operation::Options MakeOptions(const double cap,
                                std::string clipped_relu_impl_name = "") {
   Operation::Options options;

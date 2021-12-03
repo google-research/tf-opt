@@ -36,15 +36,6 @@ TEST(VariableOperationTest, SimpleCreate) {
   EXPECT_THAT(op, OperationArgsAre("v1", {}, shape));
 }
 
-TEST(VariableOperationTest, CreateForGraph) {
-  const Shape shape({2, 4});
-  TFOPT_ASSERT_OK_AND_ASSIGN(const auto op_args_pair,
-                             VariableOperation::CreateForGraph("v1", shape));
-  EXPECT_THAT(op_args_pair.second, ElementsAre());
-  const VariableOperation& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("v1", {}, shape));
-}
-
 TEST(VariableOperationTest, GenericCreate) {
   const Shape shape({2, 4});
   TFOPT_ASSERT_OK_AND_ASSIGN(

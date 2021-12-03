@@ -43,10 +43,6 @@ class ExpandDimsOperation : public Operation {
                                                     Shape input_shape,
                                                     int axis);
 
-  // TODO: replace this by a variadic template function.
-  static MaybeForGraph<ExpandDimsOperation> CreateForGraph(
-      std::string op_name, const Operation* input, int axis);
-
   // Expected input format:
   //   input_shapes: The shape of the tensor to expand,
   //       input_shapes.size() == 1.
@@ -64,6 +60,9 @@ class ExpandDimsOperation : public Operation {
   void Accept(OperationVisitor* visitor) const override {
     visitor->Visit(*this);
   }
+
+  proto::TensorNode ToProto(
+      const std::vector<std::string>& inputs) const override;
 
  private:
   ExpandDimsOperation(std::string op_name, Shape input_shape,

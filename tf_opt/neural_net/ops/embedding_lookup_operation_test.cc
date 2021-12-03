@@ -71,20 +71,6 @@ TEST(EmbeddingLookupOperationTest, SimpleCreateIncompatibleShapes) {
               StatusIs(kInvalidArgument));
 }
 
-TEST(EmbeddingLookupOperationTest, CreateForGraph) {
-  const ConstantOperation params("params", DoubleTensor(ParamsShape()));
-  const ConstantOperation ids("ids", DoubleTensor(IdsShape()));
-  TFOPT_ASSERT_OK_AND_ASSIGN(const auto op_args_pair,
-                             EmbeddingLookupOperation::CreateForGraph(
-                                 "embedding_lookup1", &params, &ids));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&params, &ids));
-  const EmbeddingLookupOperation& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("embedding_lookup1",
-                                   {ParamsShape(), IdsShape()}, ResultShape()));
-  EXPECT_EQ(op.params(), ParamsShape());
-  EXPECT_EQ(op.ids(), IdsShape());
-}
-
 TEST(EmbeddingLookupOperationTest, GenericCreate) {
   TFOPT_ASSERT_OK_AND_ASSIGN(
       const auto op, EmbeddingLookupOperation::GenericCreate(

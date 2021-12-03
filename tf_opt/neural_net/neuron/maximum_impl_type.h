@@ -32,6 +32,9 @@ enum class MaximumImplementationType {
   kEpigraph,
 };
 
+constexpr MaximumImplementationType kDefaultMaximum =
+    MaximumImplementationType::kTightenedBigM;
+
 std::vector<MaximumImplementationType> AllMaximumImplementations();
 
 std::vector<MaximumImplementationType> AllExactMaximumImplementations();

@@ -46,10 +46,6 @@ class BinaryArithmeticOperation : public Operation {
   static absl::StatusOr<BinaryArithmeticOperation<OpType>> Create(
       std::string op_name, Shape left_shape, Shape right_shape);
 
-  // TODO: replace this by a variadic template function.
-  static MaybeForGraph<BinaryArithmeticOperation<OpType>> CreateForGraph(
-      std::string op_name, const Operation* left, const Operation* right);
-
   // Expected input format:
   //   input_shapes: Shapes of the input tensors, input_shapes.size() == 2.
   //   output_shape: The shape to produce, follows broadcasting rules.
@@ -99,17 +95,6 @@ BinaryArithmeticOperation<OpType>::Create(std::string op_name, Shape left_shape,
   return BinaryArithmeticOperation<OpType>(
       std::move(op_name), {std::move(left_shape), std::move(right_shape)},
       std::move(output_shape));
-}
-
-template <BinaryArithmeticOpType OpType>
-MaybeForGraph<BinaryArithmeticOperation<OpType>>
-BinaryArithmeticOperation<OpType>::CreateForGraph(std::string op_name,
-                                                  const Operation* left,
-                                                  const Operation* right) {
-  return FromMaybeCreated(
-      BinaryArithmeticOperation<OpType>::Create(
-          std::move(op_name), left->output_shape(), right->output_shape()),
-      {left, right});
 }
 
 template <BinaryArithmeticOpType OpType>

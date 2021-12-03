@@ -52,23 +52,6 @@ TEST(SliceOperationTest, SimpleCreateInvalidSize) {
               StatusIs(kInvalidArgument));
 }
 
-TEST(SliceOperationTest, CreateForGraph) {
-  const Shape input_shape({3, 3});
-  const std::vector<int64_t> begin({1, 1});
-  const std::vector<int64_t> sizes({2, 2});
-  const Shape output_shape({2, 2});
-  const ConstantOperation constant_op("const1", DoubleTensor(input_shape));
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      SliceOperation::CreateForGraph("s1", &constant_op, begin, sizes));
-  EXPECT_THAT(op_args_pair.second, ElementsAre(&constant_op));
-  const SliceOperation& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("s1", {input_shape}, output_shape));
-  EXPECT_EQ(op.input(), input_shape);
-  EXPECT_EQ(op.begin(), begin);
-  EXPECT_EQ(op.sizes(), sizes);
-}
-
 Operation::Options MakeOptions(const std::vector<int64_t>& begin,
                                const std::vector<int64_t>& sizes) {
   Operation::Options options;

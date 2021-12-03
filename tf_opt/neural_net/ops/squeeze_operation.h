@@ -46,11 +46,6 @@ class SqueezeOperation : public Operation {
                                                  Shape input_shape,
                                                  std::vector<int> axes);
 
-  // TODO: replace this by a variadic template function.
-  static MaybeForGraph<SqueezeOperation> CreateForGraph(std::string op_name,
-                                                        const Operation* input,
-                                                        std::vector<int> axes);
-
   // Expected input format:
   //   input_shapes: The shape of the tensor to squeeze,
   //       input_shapes.size() == 1.
@@ -67,6 +62,9 @@ class SqueezeOperation : public Operation {
   void Accept(OperationVisitor* visitor) const override {
     visitor->Visit(*this);
   }
+
+  proto::TensorNode ToProto(
+      const std::vector<std::string>& inputs) const override;
 
  private:
   SqueezeOperation(std::string op_name, Shape input_shape, Shape output_shape,

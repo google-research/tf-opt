@@ -34,16 +34,6 @@ TEST(ConstantOperationTest, SimpleCreate) {
   EXPECT_THAT(op.value(), DoubleTensorEquals(DoubleTensor({4.0, 5.0})));
 }
 
-TEST(ConstantOperationTest, CreateForGraph) {
-  TFOPT_ASSERT_OK_AND_ASSIGN(
-      const auto op_args_pair,
-      ConstantOperation::CreateForGraph("c1", DoubleTensor({4.0, 5.0})));
-  EXPECT_THAT(op_args_pair.second, ElementsAre());
-  const ConstantOperation& op = op_args_pair.first;
-  EXPECT_THAT(op, OperationArgsAre("c1", {}, Shape({2})));
-  EXPECT_THAT(op.value(), DoubleTensorEquals(DoubleTensor({4.0, 5.0})));
-}
-
 TEST(ConstantOperationTestDeathTest, GenericCreateDies) {
   EXPECT_DEATH((void)ConstantOperation::GenericCreate("c1", {}, Shape(),
                                                       Operation::Options()),

@@ -32,6 +32,8 @@ enum class ReluImplementationType {
   kBigMRelaxation,
 };
 
+constexpr ReluImplementationType kDefaultRelu = ReluImplementationType::kBigM;
+
 const char* ToString(ReluImplementationType relu_impl);
 
 ABSL_MUST_USE_RESULT bool ReluImplFromString(
