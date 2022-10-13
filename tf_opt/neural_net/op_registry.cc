@@ -1,4 +1,4 @@
-// Copyright 2021 The tf.opt Authors.
+// Copyright 2022 The tf.opt Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
 
 #include "tf_opt/neural_net/op_registry.h"
 
+#include <memory>
 #include <utility>
 
 #include "ortools/base/logging.h"
@@ -73,7 +74,7 @@ struct OpFactory {
         OpClass::GenericCreate(std::move(op_name), std::move(input_shapes),
                                std::move(output_shape), options));
     std::unique_ptr<Operation> result =
-        absl::make_unique<OpClass>(std::move(op));
+        std::make_unique<OpClass>(std::move(op));
     return result;
   }
 };
