@@ -215,9 +215,6 @@
 #include <vector>   // NOLINT
 
 #include "ortools/base/logging.h"
-#include "google/protobuf/io/zero_copy_stream.h"
-#include "google/protobuf/io/zero_copy_stream_impl.h"
-#include "google/protobuf/io/zero_copy_stream_impl_lite.h"
 #include "google/protobuf/descriptor.h"
 #include "google/protobuf/map.h"
 #include "google/protobuf/message.h"
@@ -228,6 +225,9 @@
 #include "absl/memory/memory.h"
 #include "absl/strings/cord.h"
 #include "absl/strings/string_view.h"
+#include "google/protobuf/io/zero_copy_stream.h"
+#include "google/protobuf/io/zero_copy_stream_impl.h"
+#include "google/protobuf/io/zero_copy_stream_impl_lite.h"
 
 namespace google {
 namespace protobuf {

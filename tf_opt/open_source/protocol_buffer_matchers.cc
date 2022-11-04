@@ -18,9 +18,6 @@
 #include <string>
 
 #include "ortools/base/logging.h"
-#include "google/protobuf/io/coded_stream.h"
-#include "google/protobuf/io/tokenizer.h"
-#include "google/protobuf/io/zero_copy_stream_impl_lite.h"
 #include "google/protobuf/descriptor.h"
 #include "google/protobuf/message.h"
 #include "google/protobuf/text_format.h"
@@ -28,6 +25,9 @@
 #include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
 #include "absl/strings/substitute.h"
+#include "google/protobuf/io/coded_stream.h"
+#include "google/protobuf/io/tokenizer.h"
+#include "google/protobuf/io/zero_copy_stream_impl_lite.h"
 #include "re2/re2.h"
 
 namespace tf_opt {

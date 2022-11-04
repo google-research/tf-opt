@@ -12,6 +12,7 @@ cc_library(
     srcs = ["protocol_buffer_matchers.cc"],
     hdrs = ["protocol_buffer_matchers.h"],
     deps = [
+        "//third_party/protobuf/io:tokenizer",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/strings:cord",
