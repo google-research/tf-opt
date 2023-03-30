@@ -1,4 +1,4 @@
-// Copyright 2022 The tf.opt Authors.
+// Copyright 2023 The tf.opt Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -77,7 +77,7 @@ bool Clif_PyObjAs(PyObject* numpy_array, DoubleTensor* tensor) {
   int64_t size_in_bytes = shape.size() * kBytesPerDouble;
 
   DoubleTensor result(shape);
-  auto p = reinterpret_cast<uint8*>(result.mutable_flat_values()->data());
+  auto p = reinterpret_cast<uint8_t*>(result.mutable_flat_values()->data());
   std::memcpy(p, PyArray_DATA(input), size_in_bytes);
   *tensor = std::move(result);
   return true;
