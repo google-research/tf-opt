@@ -274,8 +274,8 @@ void SetIgnoredFieldPathsOrDie(const google::protobuf::Descriptor& root_descript
                                const std::vector<std::string>& field_paths,
                                google::protobuf::util::MessageDifferencer* differencer) {
   for (absl::string_view field_path : field_paths) {
-    differencer->AddIgnoreCriteria(new IgnoreFieldPathCriteria(
-        ParseFieldPathOrDie(field_path, root_descriptor)));
+    differencer->AddIgnoreCriteria(absl::WrapUnique(new IgnoreFieldPathCriteria(
+        ParseFieldPathOrDie(field_path, root_descriptor))));
   }
 }
 
