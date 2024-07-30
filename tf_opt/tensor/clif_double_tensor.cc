@@ -16,10 +16,10 @@
 
 #include <cstdint>
 
+#include "numpy/ndarrayobject.h"
+#include "numpy/ndarraytypes.h"
 #include "third_party/clif/python/postconv.h"
 #include "third_party/clif/python/types.h"
-#include "third_party/py/numpy/core/include/numpy/ndarrayobject.h"
-#include "third_party/py/numpy/core/include/numpy/ndarraytypes.h"
 #include "tf_opt/tensor/shape.h"
 
 namespace tf_opt {
