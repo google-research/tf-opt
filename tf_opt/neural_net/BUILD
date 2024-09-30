@@ -22,7 +22,6 @@ cc_proto_library(
 py_proto_library(
     name = "neural_net_py_pb2",
     srcs = ["neural_net.proto"],
-    api_version = 2,
     visibility = [
         "//visibility:public",
     ],

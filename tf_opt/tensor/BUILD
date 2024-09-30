@@ -47,7 +47,6 @@ cc_proto_library(
 py_proto_library(
     name = "tensor_py_pb2",
     srcs = ["tensor.proto"],
-    api_version = 2,
 )
 
 cc_library(
