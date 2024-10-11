@@ -22,6 +22,7 @@
 #include "google/protobuf/message.h"
 #include "google/protobuf/text_format.h"
 #include "google/protobuf/util/message_differencer.h"
+#include "absl/strings/str_cat.h"
 #include "absl/strings/string_view.h"
 #include "absl/strings/strip.h"
 #include "absl/strings/substitute.h"
@@ -369,8 +370,8 @@ bool ProtoCompare(const ProtoComparison& comp, const google::protobuf::Message& 
 // Describes the types of the expected and the actual protocol buffer.
 std::string DescribeTypes(const google::protobuf::MessageLite& expected,
                           const google::protobuf::MessageLite& actual) {
-  return "whose type should be " + expected.GetTypeName() +
-         " but actually is " + actual.GetTypeName();
+  return absl::StrCat("whose type should be ", expected.GetTypeName(),
+                      " but actually is ", actual.GetTypeName());
 }
 
 // Describes the differences between the two protocol buffers.

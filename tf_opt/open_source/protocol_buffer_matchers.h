@@ -859,7 +859,7 @@ class UntypedProtoMatcherStringAdapter final
   }
 
   std::string ExpectedTypeName() const override {
-    return expected_proto_->GetTypeName();
+    return std::string(expected_proto_->GetTypeName());
   }
 
   std::string TypeArgName() const override { return "protobuf"; }
