@@ -18,6 +18,7 @@
 #define LEARNING_BRAIN_RESEARCH_TF_OPT_OPTIMIZE_NEURON_MAXIMUM_MAXIMUM_IMPL_TYPE_H_
 
 #include <iostream>
+#include <vector>
 
 #include "absl/strings/string_view.h"
 
