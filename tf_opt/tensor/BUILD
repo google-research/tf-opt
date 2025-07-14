@@ -1,4 +1,6 @@
 load("@com_google_protobuf//:protobuf.bzl", "py_proto_library")
+load("//third_party/bazel_rules/rules_cc/cc:cc_library.bzl", "cc_library")
+load("//third_party/bazel_rules/rules_cc/cc:cc_test.bzl", "cc_test")
 load("//third_party/protobuf/bazel:proto_library.bzl", "proto_library")
 
 package(
