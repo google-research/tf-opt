@@ -18,6 +18,7 @@
 
 #include "numpy/ndarrayobject.h"
 #include "numpy/ndarraytypes.h"
+#include "absl/log/die_if_null.h"
 #include "third_party/clif/python/postconv.h"
 #include "third_party/clif/python/types.h"
 #include "tf_opt/tensor/shape.h"

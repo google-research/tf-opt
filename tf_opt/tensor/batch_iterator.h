@@ -20,6 +20,7 @@
 
 #include "ortools/base/logging.h"
 #include "absl/container/flat_hash_map.h"
+#include "absl/log/die_if_null.h"
 #include "absl/status/statusor.h"
 #include "tf_opt/tensor/tensor.h"
 

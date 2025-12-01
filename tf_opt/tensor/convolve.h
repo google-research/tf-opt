@@ -57,6 +57,7 @@
 #include <string>
 
 #include "ortools/base/logging.h"
+#include "absl/log/die_if_null.h"
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
 #include "absl/strings/string_view.h"

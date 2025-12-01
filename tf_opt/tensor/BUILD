@@ -136,6 +136,7 @@ cc_library(
     deps = [
         ":tensor",
         "@com_google_absl//absl/container:flat_hash_map",
+        "@com_google_absl//absl/log:die_if_null",
         "@com_google_absl//absl/status:statusor",
         "@com_google_ortools//ortools/base",
     ],
@@ -188,6 +189,7 @@ cc_library(
         ":tensor",
         ":window",
         "//tf_opt/open_source:status_macros",
+        "@com_google_absl//absl/log:die_if_null",
         "@com_google_absl//absl/status",
         "@com_google_absl//absl/status:statusor",
         "@com_google_absl//absl/strings",
