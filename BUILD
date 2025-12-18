@@ -1,7 +1,7 @@
 load("//tools/build_defs/license:license.bzl", "license")
 
 package(
-    default_applicable_licenses = ["//third_party/tf_opt:license"],
+    default_applicable_licenses = [":license"],
     default_visibility = ["//visibility:public"],
 )
 
