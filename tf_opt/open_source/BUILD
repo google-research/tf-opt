@@ -17,13 +17,15 @@ cc_library(
     srcs = ["protocol_buffer_matchers.cc"],
     hdrs = ["protocol_buffer_matchers.h"],
     deps = [
+        "//third_party/protobuf",
+        "//third_party/protobuf:protobuf_lite",
         "//third_party/protobuf/io:tokenizer",
+        "//third_party/protobuf/util:differencer",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
         "@com_google_absl//absl/strings:cord",
         "@com_google_googletest//:gtest",
         "@com_google_ortools//ortools/base",
-        "@com_google_protobuf//:protobuf",
         "@com_googlesource_code_re2//:re2",
     ],
 )
