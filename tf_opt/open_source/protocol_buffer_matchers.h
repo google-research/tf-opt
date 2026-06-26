@@ -226,6 +226,7 @@
 #include "google/protobuf/io/zero_copy_stream_impl_lite.h"
 #include "third_party/protobuf/map.h"
 #include "third_party/protobuf/message.h"
+#include "third_party/protobuf/message_lite.h"
 #include "third_party/protobuf/text_format.h"
 #include "third_party/protobuf/util/message_differencer.h"
 
@@ -529,7 +530,7 @@ bool ProtoMatcherBaseImpl<MessageType>::MatchAndExplain(
     bool is_matcher_for_pointer,  // true iff this matcher is used to match
                                   // a protobuf pointer.
     ::testing::MatchResultListener* listener) const {
-  const auto& casted_arg = dynamic_cast<const MessageType&>(arg);
+  const auto& casted_arg = google::protobuf::DynamicCastMessage<MessageType>(arg);
   if (must_be_initialized_ && !casted_arg.IsInitialized()) {
     *listener << "which isn't fully initialized";
     return false;
@@ -663,7 +664,8 @@ class ProtoStringMatcher : public ProtoMatcherBase {
   const google::protobuf::Message* CreateExpectedProto(
       const google::protobuf::MessageLite& arg,
       ::testing::MatchResultListener* listener) const override {
-    auto* expected_proto = dynamic_cast<google::protobuf::Message*>(arg.New());
+    auto* expected_proto =
+        google::protobuf::DynamicCastMessage<google::protobuf::Message>(arg.New());
     // We don't insist that the expected string parses as an
     // *initialized* protobuf.  Otherwise EqualsProto("...") may
     // wrongfully fail when the actual protobuf is not fully
