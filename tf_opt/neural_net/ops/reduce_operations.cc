@@ -17,9 +17,9 @@
 namespace tf_opt {
 namespace reduce {
 
-const absl::string_view kOptionsAxesKey = "axes";
-const absl::string_view kOptionsFormulationKey = "formulation";
-const absl::string_view kOptionsFormulationDefault = "default";
+ABSL_CONST_INIT const absl::string_view kOptionsAxesKey = "axes";
+ABSL_CONST_INIT const absl::string_view kOptionsFormulationKey = "formulation";
+ABSL_CONST_INIT const absl::string_view kOptionsFormulationDefault = "default";
 
 absl::string_view OptionsFormulation(const MaximumImplementationType max_impl) {
   return ToString(max_impl);
