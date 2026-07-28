@@ -26,6 +26,7 @@ cc_test(
     srcs = ["inequality_checker_test.cc"],
     deps = [
         ":inequality_checker",
+        "//third_party/ortools/ortools/linear_solver:linear_solver_scip",
         "@com_google_googletest//:gtest_main",
         "@com_google_ortools//ortools/linear_solver",
     ],
